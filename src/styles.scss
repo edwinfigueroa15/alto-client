@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.icon-svg {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+}
+
+.active {
+    background: #dcdcdc82;
+    border-radius: 5px;
+}
+
+
+.min-h-content {
+    min-height: calc(100vh - 64px);
+}
