@@ -24,8 +24,7 @@ export class InputSelectComponent implements OnInit {
   ngOnInit() { }
 
   OnChangeSelect(event: any) {
-    const item = this.list.find(item => item.value == event.value);
-    this.changeEvent.emit(item);
+    this.changeEvent.emit(event.target.value || null);
   }
 
   getKeyError(value: any) {

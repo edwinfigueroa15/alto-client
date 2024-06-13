@@ -39,7 +39,8 @@
                         label="Equipo (Uno o Local)"
                         [list]="listTeams"
                         [control]="form.controls.team_one"
-                        [errors]="errors.team_one">
+                        [errors]="errors.team_one"
+                        (changeEvent)="onChangeSelect($event)">
                     </app-input-select>
                 </div>
                 <div class="col-span-6 sm:col-span-3">
@@ -47,9 +48,13 @@
                         label="Equipo (Dos o Visitante)"
                         [list]="listTeams"
                         [control]="form.controls.team_two"
-                        [errors]="errors.team_two">
+                        [errors]="errors.team_two"
+                        (changeEvent)="onChangeSelect($event)">
                     </app-input-select>
                 </div>
+                @if(equalTeams()) {
+                    <div class="w-full text-center col-span-6"><span class="text-red-600">Los equipos no son diferentes</span></div>
+                }
                 <div class="col-span-6 sm:col-span-3">
                     <app-input-text
                         type="number"
@@ -87,7 +92,7 @@
       </div>
       <div footer class="flex flex-row justify-end gap-4">
         <button class="px-2 py-1 rounded bg-zinc-300 hover:bg-zinc-400" (click)="closeModal(true)">Cancelar</button>
-        <button class="text-white px-2 py-1 rounded bg-blue-600 hover:bg-blue-700" (click)="addOrUpdateTeam()" [disabled]="form.invalid">{{ isEdit() ? 'Actualizar Partido' : 'Guardar Partido' }}</button>
+        <button class="text-white px-2 py-1 rounded bg-blue-600 hover:bg-blue-700" (click)="addOrUpdateTeam()" [disabled]="form.invalid || equalTeams()">{{ isEdit() ? 'Actualizar Partido' : 'Guardar Partido' }}</button>
       </div>
     </app-modal>
 }

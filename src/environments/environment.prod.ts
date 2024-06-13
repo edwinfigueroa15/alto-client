@@ -1,3 +1,3 @@
 export const environment = {
-    API_URL: "http://127.0.0.1:8000/api/v1",
+    API_URL: "https://alto-server.onrender.com/api/v1",
 };
