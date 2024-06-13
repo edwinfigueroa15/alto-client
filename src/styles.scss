@@ -12,7 +12,10 @@
     border-radius: 5px;
 }
 
-
 .min-h-content {
-    min-height: calc(100vh - 64px);
+    min-height: calc(100vh - 80px);
+}
+
+button[disabled] {
+    opacity: 0.5;
 }

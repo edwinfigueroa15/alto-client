@@ -1,1 +1,95 @@
-<p>team_works</p>
+<div class="pb-4 px-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
+    <div class="mb-1 w-full">
+        <app-bread-crumbs [breadCrumbs]="['Equipos']" ></app-bread-crumbs>
+        
+        <div class="sm:flex justify-center sm:justify-between">
+            <div class="mb-4 sm:mb-0">
+                <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">Lista de equipos</h1>
+            </div>
+
+            <button type="button" (click)="createEvent()" class="w-full text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto">
+                <svg class="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                Nuevo Equipo
+            </button>
+        </div>
+    </div>
+</div>
+
+@if(dataBodyTable.length) {
+    <app-table
+        [nameHeaderColumns]="nameHeaderColumns"
+        [keyBodyData]="keyBodyData"
+        [dataBodyTable]="dataBodyTable"
+        [showActionsTable]="showActionsTable"
+        (editEvent)="editEvent($event)"
+        (deleteEvent)="deleteEvent($event)">
+    </app-table>
+} @else {
+    <div class="text-center mt-3">No existen registros</div>
+}
+
+@if(showModal()) {
+    <app-modal (close)="closeModal($event)">
+      <div header>{{ isEdit() ? 'Actualizar Equipo' : 'Crear Equipo' }}</div>
+      <div content>
+        <form [formGroup]="form">
+            <div class="grid grid-cols-6 gap-1">
+                <div class="col-span-6">
+                    <app-input-text
+                        type="text"
+                        label="Nombre"
+                        [control]="form.controls.name"
+                        [errors]="errors.name">
+                    </app-input-text>
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                    <app-input-text
+                        type="number"
+                        label="Goles a favor"
+                        [control]="form.controls.goals_favor"
+                        [errors]="errors.goals_favor">
+                    </app-input-text>
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                    <app-input-text
+                        type="number"
+                        label="Goles en contra"
+                        [control]="form.controls.goals_against"
+                        [errors]="errors.goals_against">
+                    </app-input-text>
+                </div>
+                <div class="col-span-6">
+                    <app-input-text
+                        type="number"
+                        label="Partidos ganados"
+                        [control]="form.controls.matches_won"
+                        [errors]="errors.matches_won">
+                    </app-input-text>
+                </div>
+
+                <div class="col-span-6">
+                    <app-input-text
+                        type="number"
+                        label="Partidos empatados"
+                        [control]="form.controls.tied_matches"
+                        [errors]="errors.tied_matches">
+                    </app-input-text>
+                </div>
+
+                <div class="col-span-6">
+                    <app-input-text
+                        type="number"
+                        label="Partidos perdidos"
+                        [control]="form.controls.lost_matches"
+                        [errors]="errors.lost_matches">
+                    </app-input-text>
+                </div>
+            </div> 
+        </form>
+      </div>
+      <div footer class="flex flex-row justify-end gap-4">
+        <button class="px-2 py-1 rounded bg-zinc-300 hover:bg-zinc-400" (click)="closeModal(true)">Cancelar</button>
+        <button class="text-white px-2 py-1 rounded bg-blue-600 hover:bg-blue-700" (click)="addOrUpdateTeam()" [disabled]="form.invalid">{{ isEdit() ? 'Actualizar Equipo' : 'Guardar Equipo' }}</button>
+      </div>
+    </app-modal>
+}

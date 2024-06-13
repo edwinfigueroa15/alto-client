@@ -1,0 +1,19 @@
+<div class="w-full h-screen fixed top-0 left-0 right-0 z-50 px-4 bg-gray-950 bg-opacity-45 flex justify-center items-center" (click)="closeModal()">
+  <div class="bg-white rounded p-4 w-full sm:min-w-96 sm:w-auto" (click)="$event.stopPropagation()">
+
+    <div #header class="modal-header bg-white pb-2 border-b-2 flex flex-row items-center justify-between text-lg font-bold">
+      <ng-content select="[header]"></ng-content>
+      <button slot="end" fill="clear" class="px-2 text-black hover:text-white hover:font-normal hover:bg-red-700 rounded-sm" (click)="closeModal()">X</button>
+    </div>
+
+    <div #content class="modal-content bg-white py-2 overflow-y-auto">
+      <ng-content select="[content]"></ng-content>
+    </div>
+
+    @if(footerExist()) {
+      <div #footer class="modal-footer bg-white pt-2 border-t-2">
+        <ng-content select="[footer]"></ng-content>
+      </div>
+    }
+  </div>
+</div>

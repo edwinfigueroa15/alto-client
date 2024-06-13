@@ -1,1 +1,93 @@
-<p>matches_works</p>
+<div class="pb-4 px-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
+    <div class="mb-1 w-full">
+        <app-bread-crumbs [breadCrumbs]="['Partidos']" ></app-bread-crumbs>
+        
+        <div class="sm:flex justify-center sm:justify-between">
+            <div class="mb-4 sm:mb-0">
+                <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">Lista de partidos</h1>
+            </div>
+
+            <button type="button" (click)="createEvent()" class="w-full text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto">
+                <svg class="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                Nuevo Partido
+            </button>
+        </div>
+    </div>
+</div>
+
+@if(dataBodyTable.length) {
+    <app-table
+        [nameHeaderColumns]="nameHeaderColumns"
+        [keyBodyData]="keyBodyData"
+        [dataBodyTable]="dataBodyTable"
+        [showActionsTable]="showActionsTable"
+        (editEvent)="editEvent($event)"
+        (deleteEvent)="deleteEvent($event)">
+    </app-table>
+} @else {
+    <div class="text-center mt-3">No existen registros</div>
+}
+
+@if(showModal()) {
+    <app-modal (close)="closeModal($event)">
+      <div header>{{ isEdit() ? 'Actualizar Partido' : 'Crear Partido' }}</div>
+      <div content>
+        <form [formGroup]="form">
+            <div class="grid grid-cols-6 gap-1">
+                <div class="col-span-6 sm:col-span-3">
+                    <app-input-select
+                        label="Equipo (Uno o Local)"
+                        [list]="listTeams"
+                        [control]="form.controls.team_one"
+                        [errors]="errors.team_one">
+                    </app-input-select>
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                    <app-input-select
+                        label="Equipo (Dos o Visitante)"
+                        [list]="listTeams"
+                        [control]="form.controls.team_two"
+                        [errors]="errors.team_two">
+                    </app-input-select>
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                    <app-input-text
+                        type="number"
+                        label="Goles del equipo (Uno o Local)"
+                        [control]="form.controls.goals_team_one"
+                        [errors]="errors.goals_team_one">
+                    </app-input-text>
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                    <app-input-text
+                        type="number"
+                        label="Goles del equipo (Dos o Visitante)"
+                        [control]="form.controls.goals_team_two"
+                        [errors]="errors.goals_team_two">
+                    </app-input-text>
+                </div>
+                <div class="col-span-6">
+                    <p class="mx-2 font-bold">Al seleccionar el estado como terminado el partido no se podra modificar ni cancelar</p>
+                    <app-input-select
+                        label="Estado del partido"
+                        [list]="listStatus"
+                        [control]="form.controls.status"
+                        [errors]="errors.status">
+                    </app-input-select>
+                </div>
+                <div class="col-span-6">
+                    <app-input-date
+                        label="Fecha del partido"
+                        [control]="form.controls.data_start"
+                        [errors]="errors.data_start">
+                    </app-input-date>
+                </div>
+            </div> 
+        </form>
+      </div>
+      <div footer class="flex flex-row justify-end gap-4">
+        <button class="px-2 py-1 rounded bg-zinc-300 hover:bg-zinc-400" (click)="closeModal(true)">Cancelar</button>
+        <button class="text-white px-2 py-1 rounded bg-blue-600 hover:bg-blue-700" (click)="addOrUpdateTeam()" [disabled]="form.invalid">{{ isEdit() ? 'Actualizar Partido' : 'Guardar Partido' }}</button>
+      </div>
+    </app-modal>
+}

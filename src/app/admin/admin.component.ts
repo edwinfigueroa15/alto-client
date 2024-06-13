@@ -14,9 +14,9 @@ export default class AdminComponent {
   showMenu = signal(false);
   currentPath: string = '';
   pages: Menu[] = [
-    { title: 'Estadisticas', url: '/admin/statistics', icon: 'assets/icons/' },
-    { title: 'Equipos', url: '/admin/team', icon: 'assets/icons/' },
-    { title: 'Partidos', url: '/admin/matches', icon: 'assets/icons/' },
+    { title: 'Estadísticas', url: '/admin/statistics', icon: 'icons/statistics.png' },
+    { title: 'Equipos', url: '/admin/team', icon: 'icons/team.png' },
+    { title: 'Partidos', url: '/admin/matches', icon: 'icons/matches.png' },
   ]
 
   private _router = inject(Router);
