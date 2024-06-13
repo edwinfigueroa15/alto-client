@@ -123,7 +123,6 @@ export default class TeamComponent {
   }
 
   deleteEvent(event: any) {
-    console.log(event);
     const deleteConfirm = confirm('¿Desea eliminar este equipo?');
     if(deleteConfirm) {
       this.allSubs[this.allSubs.length] = this._teamService.delete(event.id).subscribe({

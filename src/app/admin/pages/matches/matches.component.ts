@@ -118,9 +118,10 @@ export default class MatchesComponent {
   }
 
   addOrUpdateTeam() {
+    const id = this.form.value.id!;
+    delete this.form.value.id;
+
     if (this.isEdit()) { 
-      const id = this.form.value.id!;
-      delete this.form.value.id;
       this.allSubs[this.allSubs.length] = this._matchesService.update(id, this.form.value).subscribe({
         next: (res) => {
           this.getAllMatches();
@@ -128,11 +129,11 @@ export default class MatchesComponent {
         },
         error: (err) => {
           console.log(err)
+          this.form.controls['id'].setValue(id)
         }
       })
 
     } else {
-      delete this.form.value.id;
       this.allSubs[this.allSubs.length] = this._matchesService.create(this.form.value).subscribe({
         next: (res) => {
           this.getAllMatches();
@@ -140,6 +141,7 @@ export default class MatchesComponent {
         },
         error: (err) => {
           console.log(err)
+          this.form.controls['id'].setValue(id)
         }
       })
     }
