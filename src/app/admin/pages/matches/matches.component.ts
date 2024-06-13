@@ -19,6 +19,7 @@ export default class MatchesComponent {
   allSubs: Subscription[] = [];
   showModal = signal<boolean>(false);
   isEdit = signal<boolean>(false);
+  equalTeams = signal<boolean>(false);
   
   showActionsTable = { edit: true, delete: true };
   nameHeaderColumns: string[] = ['Goles', 'Equipos', 'Goles', 'Fecha del partido', 'Estado'];
@@ -74,6 +75,14 @@ export default class MatchesComponent {
 
   ngOnDestroy() {
     this.allSubs.forEach((sub) => sub.unsubscribe());
+  }
+
+  onChangeSelect(event: any) {
+    if(this.form.controls['team_one'].value === this.form.controls['team_two'].value) {
+      this.equalTeams.set(true);
+    } else {
+      this.equalTeams.set(false);
+    }
   }
 
   getAllTeamsForSelect() {

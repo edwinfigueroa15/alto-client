@@ -37,7 +37,6 @@ export default class TeamComponent {
     name: {
       required: { message: 'El nombre del equipo es obligatorio' },
     },
-    
     goals_favor: {
       required: { message: 'Los goles a favor son obligatorios' },
     },
@@ -79,13 +78,20 @@ export default class TeamComponent {
 
   closeModal(event: boolean) {
     this.showModal.set(!event);
-    this.form.reset();
+    this.form.reset({
+      id: null,
+      name: '',
+      goals_favor: '0',
+      goals_against: '0',
+      matches_won: '0',
+      tied_matches: '0',
+      lost_matches: '0',
+    });
   }
 
   createEvent() {
     this.isEdit.set(false);
     this.showModal.set(true);
-    this.form.reset();
   }
 
   editEvent(event: Team) {
