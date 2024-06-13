@@ -1,0 +1,16 @@
+<div class="pb-4 px-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
+    <div class="mb-1 w-full">
+        <app-bread-crumbs [breadCrumbs]="['Estadísticas']" ></app-bread-crumbs>
+        <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">Estadísticas</h1>
+    </div>
+</div>
+
+@if(dataBodyTable.length) {
+    <app-table
+        [nameHeaderColumns]="nameHeaderColumns"
+        [keyBodyData]="keyBodyData"
+        [dataBodyTable]="dataBodyTable">
+    </app-table>
+} @else {
+    <div class="text-center mt-3">No existen registros</div>
+}

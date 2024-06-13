@@ -6,21 +6,25 @@ export const routes: Routes = [
         loadComponent: () => import("./admin.component"),
         children: [
             {
-                path: 'team',
-                loadComponent: () => import('./pages/team/team.component'),
+                path: 'statistics',
+                loadComponent: () => import('./pages/statistics/statistics.component'),
             },
             {
                 path: 'matches',
                 loadComponent: () => import('./pages/matches/matches.component'),
             },
             {
+                path: 'team',
+                loadComponent: () => import('./pages/team/team.component'),
+            },
+            {
                 path: '',
-                redirectTo: 'team',
+                redirectTo: 'statistics',
                 pathMatch: 'full'
             },
             {
                 path: '**',
-                redirectTo: 'team',
+                redirectTo: 'statistics',
                 pathMatch: 'full'
             },
         ]

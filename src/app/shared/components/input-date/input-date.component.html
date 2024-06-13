@@ -1,0 +1,13 @@
+<div class="flex flex-col items-start gap-1 m-2">
+  <label for="" class="">{{ label }}</label>
+  <input
+      class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-700"
+      type="date"
+      [formControl]="control"
+      [autocomplete]="autocomplete"
+  >
+  
+  @if(control.hasError(getKeyError(control.errors)) && control.touched) {
+    <span class="text-red-600">{{ errors[nameError].message }}</span>
+  } 
+</div>

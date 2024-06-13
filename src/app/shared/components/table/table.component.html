@@ -1,0 +1,75 @@
+<div class="flex flex-col">
+  <div class="overflow-x-auto">
+      <div class="align-middle inline-block min-w-full">
+          <div class="shadow overflow-hidden">
+              <table class="table-fixed min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-100">
+                      <tr>
+                        @for (item of nameHeaderColumns; track $index) {
+                          <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                            {{item}}
+                          </th>
+                        }
+                          
+                        @if(showActionsTable.edit || showActionsTable.delete || showActionsTable.detail || showActionsTable.status) {
+                          <th scope="col" class="p-4"></th>
+                        }
+                      </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    @for (item of dataBodyTable; track $index) {
+                      <tr class="hover:bg-gray-100">
+                            @for (itemKey of keyBodyData; track $index) {
+                              <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                                {{item[itemKey]}}
+                              </td>
+                            }
+
+                            @if(showActionsTable.edit || showActionsTable.delete || showActionsTable.detail || showActionsTable.status) {
+                              <td class="p-4 whitespace-nowrap space-x-2 w-10">
+                                <div class="w-full flex flex-row justify-end gap-2">
+                                  @if(showActionsTable.detail) {
+                                    <button type="button" (click)="OnDetail(item)" class="text-white bg-lime-600 hover:bg-lime-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
+                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                                      </svg>                                      
+                                    </button>
+                                  }
+
+                                  @if(showActionsTable.edit) {
+                                    <button type="button" [disabled]="item.status === 'finished'" (click)="OnEdit(item)" class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
+                                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
+                                    </button>
+                                  }
+  
+                                  @if(showActionsTable.delete) {
+                                    <button type="button" [disabled]="item.status === 'finished'" (click)="OnDelete(item)" data-modal-toggle="delete-user-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
+                                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                                    </button>
+                                  }
+                                </div>
+                              </td>
+                            }
+                      </tr>
+                    }               
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
+
+@if(paginator.show) {
+  <div class="bg-white sticky flex items-center w-full justify-end bottom-0 right-0 border-t border-gray-200 p-4">
+    <div class="flex items-center mb-4 sm:mb-0">
+        <button (click)="OnPageBack()" [disabled]="paginator.currentPage <= 1" class="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center">
+            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+        </button>
+        <button (click)="OnPageNext()" [disabled]="paginator.currentPage == paginator.totalPage" class="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center mr-2">
+            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+        </button>
+        <span class="text-sm font-normal text-gray-500">
+        <span class="text-gray-900 font-semibold">{{ paginator.currentPage }}</span> de <span class="text-gray-900 font-semibold">{{ paginator.totalPage }}</span></span>
+    </div>
+  </div>
+}
